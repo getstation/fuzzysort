@@ -383,13 +383,14 @@ USAGE:
       // Let's try a more advanced and strict test to improve the score
       // only count it as a match if it's consecutive or a beginning character!
       if(targetI !== targetLen) for(;;) {
+        if(typeof targetI !== 'number' ) break; // fix an unlimited check https://github.com/farzher/fuzzysort/pull/76 
         if(targetI >= targetLen) {
           // We failed to find a good spot for this search char, go back to the previous search char and force it forward
           if(searchI <= 0) { // We failed to push chars forward for a better match
             // transpose, starting from the beginning
             ++typoStrictI; if(typoStrictI > searchLen-2) break
             if(searchLowerCodes[typoStrictI] === searchLowerCodes[typoStrictI+1]) continue // doesn't make sense to transpose a repeat char
-            targetI = firstPossibleI
+            targetI = Number(firstPossibleI)
             continue
           }
 
@@ -404,7 +405,7 @@ USAGE:
             ++searchI; if(searchI === searchLen) { successStrict = true; break }
             ++targetI
           } else {
-            targetI = nextBeginningIndexes[targetI]
+            targetI = Number(nextBeginningIndexes[targetI])
           }
         }
       }
@@ -429,7 +430,7 @@ USAGE:
         prepared.score = score
         prepared.indexes = new Array(matchesBestLen); for(var i = matchesBestLen - 1; i >= 0; --i) prepared.indexes[i] = matchesBest[i]
 
-        return prepared
+        return {...prepared}
       }
     },
 
@@ -466,6 +467,7 @@ USAGE:
       // Let's try a more advanced and strict test to improve the score
       // only count it as a match if it's consecutive or a beginning character!
       if(targetI !== targetLen) for(;;) {
+        if(typeof targetI !== 'number') break ; // fix an unlimited check https://github.com/farzher/fuzzysort/pull/76 
         if(targetI >= targetLen) {
           // We failed to find a good spot for this search char, go back to the previous search char and force it forward
           if(searchI <= 0) break // We failed to push chars forward for a better match
@@ -501,7 +503,7 @@ USAGE:
         prepared.score = score
         prepared.indexes = new Array(matchesBestLen); for(var i = matchesBestLen - 1; i >= 0; --i) prepared.indexes[i] = matchesBest[i]
 
-        return prepared
+        return {...prepared}
       }
     },
 
