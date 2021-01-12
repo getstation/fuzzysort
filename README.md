@@ -1,3 +1,8 @@
+## GetStation Changes:
+
+- Fix an infinite loop when meeting [some conditions](https://github.com/farzher/fuzzysort/issues/80) on long text
+- Fix a mutable to immutable return data
+
 # [fuzzysort](https://raw.github.com/farzher/fuzzysort/master/fuzzysort.js)
 
 Fast SublimeText-like fuzzy search for JavaScript.
